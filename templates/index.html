@@ -1,0 +1,909 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECRUITRA | Intelligent Resume Screening</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #090b16;
+            --panel: #111528;
+            --panel2: #171c32;
+            --border: rgba(157, 164, 208, 0.14);
+            --purple: #9675ff;
+            --cyan: #55d9e8;
+            --text: #f3f3ff;
+            --muted: #929ab5;
+            --green: #60e6b0;
+            --red: #ff7c91;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background:
+                radial-gradient(ellipse at 15% 0%, rgba(112, 76, 255, 0.15), transparent 35%),
+                radial-gradient(ellipse at 90% 25%, rgba(54, 198, 220, 0.08), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.13;
+            background-image:
+                linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        .container {
+            width: min(1100px, 91%);
+            margin: auto;
+            position: relative;
+        }
+
+        nav {
+            height: 85px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #7654f5, #3c9fca);
+            box-shadow: 0 0 25px rgba(130, 98, 255, .3);
+            font-size: 19px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--green);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--green);
+        }
+
+        .hero {
+            padding: 76px 0 48px;
+            max-width: 730px;
+        }
+
+        .eyebrow {
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(38px, 6vw, 66px);
+            line-height: 1.08;
+            letter-spacing: -2.5px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, #a68aff, #60d8e9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 610px;
+            font-size: 15px;
+            margin-top: 22px;
+        }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 19px;
+            margin-bottom: 18px;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 55px;
+        }
+
+        .panel {
+            background: rgba(17, 21, 40, .88);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 18px 50px rgba(0,0,0,.16);
+        }
+
+        .panel-label {
+            font-size: 11px;
+            color: var(--cyan);
+            letter-spacing: 1.8px;
+            font-weight: 700;
+            margin-bottom: 17px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 220px;
+            resize: vertical;
+            background: #0b0f20;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            padding: 16px;
+            font: inherit;
+            font-size: 13px;
+            line-height: 1.7;
+            outline: none;
+            transition: .2s;
+        }
+
+        textarea:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(150,117,255,.1);
+        }
+
+        textarea::placeholder {
+            color: #626b87;
+        }
+
+        .counter {
+            color: var(--muted);
+            text-align: right;
+            font-size: 11px;
+            margin-top: 9px;
+        }
+
+        .upload-area {
+            min-height: 220px;
+            border: 1px dashed rgba(150,117,255,.55);
+            border-radius: 14px;
+            background: rgba(130,100,255,.045);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 22px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            background: rgba(130,100,255,.12);
+            border-color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .upload-icon {
+            font-size: 34px;
+            margin-bottom: 14px;
+        }
+
+        .upload-area strong {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .upload-area span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .file-list {
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0b1020;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 11px 13px;
+            font-size: 12px;
+            gap: 10px;
+        }
+
+        .file-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .remove-file {
+            background: none;
+            border: none;
+            color: var(--red);
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            margin-top: 22px;
+            padding: 16px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(100deg, #7956ed, #3b9ebd);
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(111,90,240,.3);
+        }
+
+        .analyze-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            padding-bottom: 65px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .results-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 23px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .controls input,
+        .controls select {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: var(--text);
+            padding: 10px 12px;
+            outline: none;
+            font: inherit;
+            font-size: 12px;
+            min-width: 130px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 17px;
+        }
+
+        .stat small {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .stat strong {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 25px;
+            margin-top: 8px;
+        }
+
+        .candidate-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .candidate {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 21px;
+            transition: .2s;
+        }
+
+        .candidate:hover {
+            border-color: rgba(150,117,255,.5);
+            transform: translateY(-2px);
+        }
+
+        .candidate-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .candidate-name {
+            font-weight: 700;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .rank {
+            color: var(--cyan);
+            font-size: 11px;
+            margin-right: 9px;
+        }
+
+        .score {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            color: var(--green);
+            white-space: nowrap;
+        }
+
+        .score-label {
+            font-size: 10px;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        .progress {
+            height: 6px;
+            border-radius: 10px;
+            background: #252a40;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #8865f5, #53d8df);
+            animation: grow 1s ease;
+        }
+
+        @keyframes grow {
+            from { width: 0; }
+        }
+
+        .skill-heading {
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin: 13px 0 8px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .tag {
+            font-size: 10px;
+            padding: 6px 9px;
+            border-radius: 6px;
+            background: rgba(96,230,176,.09);
+            color: var(--green);
+            border: 1px solid rgba(96,230,176,.16);
+        }
+
+        .tag.missing {
+            background: rgba(255,124,145,.08);
+            color: var(--red);
+            border-color: rgba(255,124,145,.16);
+        }
+
+        .empty {
+            text-align: center;
+            padding: 45px 15px;
+            border: 1px dashed var(--border);
+            border-radius: 15px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .empty-icon {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .error {
+            color: var(--red);
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+            text-align: center;
+            color: #69718b;
+            font-size: 11px;
+        }
+
+        @media(max-width: 750px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                width: 100%;
+            }
+
+            .controls input,
+            .controls select {
+                flex: 1;
+                min-width: 0;
+            }
+        }
+
+        @media(max-width: 450px) {
+            .status {
+                font-size: 9px;
+            }
+
+            .brand {
+                font-size: 19px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+
+            .candidate {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <nav>
+        <div class="brand">
+            <div class="brand-icon">⌕</div>
+            RECRUITRA
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="eyebrow">INTELLIGENT RESUME SCREENING / 2026</div>
+
+        <h1>
+            Smarter screening.<br>
+            <span class="gradient">Better matches.</span>
+        </h1>
+
+        <p>
+            An intelligent resume screening platform that analyzes
+            candidate resumes, identifies relevant skills and ranks
+            applicants based on their compatibility with job requirements.
+        </p>
+    </section>
+
+    <form method="POST" enctype="multipart/form-data" id="screeningForm">
+
+        <div class="workspace">
+
+            <div class="panel">
+                <div class="panel-label">01 / JOB REQUIREMENTS</div>
+
+                <h2 class="section-heading">Define your ideal candidate</h2>
+
+                <textarea
+                    name="job_description"
+                    id="jobDescription"
+                    placeholder="Paste the job description here...
+
+Example:
+Looking for a Python developer with experience in machine learning, SQL, data analysis and problem solving."
+                    required>{{ request.form.get('job_description', '') }}</textarea>
+
+                <div class="counter">
+                    <span id="charCount">0</span> characters
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-label">02 / CANDIDATE PROFILES</div>
+
+                <h2 class="section-heading">Upload resumes</h2>
+
+                <label class="upload-area" id="dropArea" for="fileInput">
+                    <div class="upload-icon">⇧</div>
+                    <strong>Drop your resumes here</strong>
+                    <span>or click to browse your files</span>
+                    <span style="margin-top:12px">PDF and TXT supported</span>
+                </label>
+
+                <input
+                    type="file"
+                    name="resumes"
+                    id="fileInput"
+                    accept=".pdf,.txt"
+                    multiple
+                >
+
+                <div class="file-list" id="fileList"></div>
+            </div>
+
+        </div>
+
+        <button type="submit" class="analyze-btn" id="analyzeBtn">
+            ANALYZE CANDIDATES →
+        </button>
+
+    </form>
+
+    {% if results %}
+    <section class="results-section" id="results">
+
+        <div class="results-header">
+            <h2>Screening results</h2>
+
+            <div class="controls">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search candidates..."
+                >
+
+                <select id="sortSelect">
+                    <option value="score">Highest match</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <small>TOTAL CANDIDATES</small>
+                <strong>{{ results|length }}</strong>
+            </div>
+
+            <div class="stat">
+                <small>SUCCESSFULLY ANALYZED</small>
+                <strong>{{ results|selectattr('score', 'defined')|list|length }}</strong>
+            </div>
+
+            <div class="stat">
+                <small>TOP MATCH</small>
+                <strong>
+                    {% set scored = results|selectattr('score', 'defined')|list %}
+                    {% if scored %}
+                        {{ scored[0].score }}%
+                    {% else %}
+                        --
+                    {% endif %}
+                </strong>
+            </div>
+        </div>
+
+        <div class="candidate-list" id="candidateList">
+
+            {% for candidate in results %}
+
+            <article
+                class="candidate"
+                data-name="{{ candidate.name|lower }}"
+                data-score="{{ candidate.score if candidate.score is defined else -1 }}"
+            >
+
+                {% if candidate.error is defined %}
+
+                    <div class="candidate-name">{{ candidate.name }}</div>
+                    <p class="error">Unable to analyze this file: {{ candidate.error }}</p>
+
+                {% else %}
+
+                    <div class="candidate-top">
+
+                        <div>
+                            <span class="rank">#{{ loop.index }}</span>
+                            <span class="candidate-name">{{ candidate.name }}</span>
+                        </div>
+
+                        <div>
+                            <div class="score">{{ candidate.score }}%</div>
+                            <div class="score-label">MATCH SCORE</div>
+                        </div>
+
+                    </div>
+
+                 <div class="progress">
+    <div class="progress-fill"
+         style="width: 0%;"
+         data-score="{{ candidate.score }}">
+    </div>
+</div>
+
+                    <div class="skill-heading">MATCHED SKILLS</div>
+
+                    <div class="tags">
+                        {% if candidate.matched %}
+                            {% for skill in candidate.matched %}
+                                <span class="tag">{{ skill }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="tag">No matching skills found</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="skill-heading">MISSING SKILLS</div>
+
+                    <div class="tags">
+                        {% if candidate.missing %}
+                            {% for skill in candidate.missing %}
+                                <span class="tag missing">{{ skill }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="tag">All identified skills matched</span>
+                        {% endif %}
+                    </div>
+
+                {% endif %}
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    {% else %}
+
+    <section class="results-section">
+        <div class="empty">
+            <div class="empty-icon">◈</div>
+            <strong>No screening results yet</strong>
+            <p style="margin-top:8px">
+                Add a job description and upload candidate resumes to begin.
+            </p>
+        </div>
+    </section>
+
+    {% endif %}
+
+    <footer>
+        RECRUITRA © 2026 · Intelligent Resume Screening System
+    </footer>
+
+</div>
+
+<script>
+    const fileInput = document.getElementById("fileInput");
+    const dropArea = document.getElementById("dropArea");
+    const fileList = document.getElementById("fileList");
+    const jobDescription = document.getElementById("jobDescription");
+    const charCount = document.getElementById("charCount");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+
+    let selectedFiles = [];
+
+    function updateFiles() {
+        fileList.innerHTML = "";
+
+        selectedFiles.forEach((file, index) => {
+            const item = document.createElement("div");
+            item.className = "file-item";
+
+            const name = document.createElement("span");
+            name.className = "file-name";
+            name.textContent = "📄 " + file.name;
+
+            const remove = document.createElement("button");
+            remove.type = "button";
+            remove.className = "remove-file";
+            remove.textContent = "×";
+            remove.title = "Remove file";
+
+            remove.addEventListener("click", () => {
+                selectedFiles.splice(index, 1);
+                updateFiles();
+            });
+
+            item.appendChild(name);
+            item.appendChild(remove);
+            fileList.appendChild(item);
+        });
+
+        const transfer = new DataTransfer();
+
+        selectedFiles.forEach(file => {
+            transfer.items.add(file);
+        });
+
+        fileInput.files = transfer.files;
+    }
+
+    fileInput.addEventListener("change", () => {
+        const incoming = Array.from(fileInput.files);
+
+        incoming.forEach(file => {
+            const valid = /\.(pdf|txt)$/i.test(file.name);
+
+            if (valid && !selectedFiles.some(f =>
+                f.name === file.name && f.size === file.size
+            )) {
+                selectedFiles.push(file);
+            }
+        });
+
+        updateFiles();
+    });
+
+    ["dragenter", "dragover"].forEach(event => {
+        dropArea.addEventListener(event, e => {
+            e.preventDefault();
+            dropArea.classList.add("dragover");
+        });
+    });
+
+    ["dragleave", "drop"].forEach(event => {
+        dropArea.addEventListener(event, e => {
+            e.preventDefault();
+            dropArea.classList.remove("dragover");
+        });
+    });
+
+    dropArea.addEventListener("drop", e => {
+        const incoming = Array.from(e.dataTransfer.files);
+
+        incoming.forEach(file => {
+            const valid = /\.(pdf|txt)$/i.test(file.name);
+
+            if (valid && !selectedFiles.some(f =>
+                f.name === file.name && f.size === file.size
+            )) {
+                selectedFiles.push(file);
+            }
+        });
+
+        updateFiles();
+    });
+
+    jobDescription.addEventListener("input", () => {
+        charCount.textContent = jobDescription.value.length;
+    });
+
+    charCount.textContent = jobDescription.value.length;
+
+    document.getElementById("screeningForm").addEventListener("submit", e => {
+        if (!jobDescription.value.trim()) {
+            e.preventDefault();
+            alert("Please enter a job description.");
+            return;
+        }
+
+        if (selectedFiles.length === 0) {
+            e.preventDefault();
+            alert("Please upload at least one resume.");
+            return;
+        }
+
+        analyzeBtn.disabled = true;
+        analyzeBtn.textContent = "ANALYZING CANDIDATES...";
+    });
+
+    const searchInput = document.getElementById("searchInput");
+    const sortSelect = document.getElementById("sortSelect");
+    const candidateList = document.getElementById("candidateList");
+
+    function filterAndSort() {
+        if (!candidateList) return;
+
+        const query = searchInput.value.toLowerCase();
+        const candidates = Array.from(
+            candidateList.querySelectorAll(".candidate")
+        );
+
+        candidates.sort((a, b) => {
+            if (sortSelect.value === "name") {
+                return a.dataset.name.localeCompare(b.dataset.name);
+            }
+
+            return Number(b.dataset.score) - Number(a.dataset.score);
+        });
+
+        candidates.forEach(candidate => {
+            const matches = candidate.dataset.name.includes(query);
+            candidate.style.display = matches ? "block" : "none";
+            candidateList.appendChild(candidate);
+        });
+    }
+
+    if (searchInput && sortSelect) {
+        searchInput.addEventListener("input", filterAndSort);
+        sortSelect.addEventListener("change", filterAndSort);
+    }
+</script>
+
+</body>
+</html>

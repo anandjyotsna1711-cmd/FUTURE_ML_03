@@ -1,0 +1,10 @@
+Alex Johnson
+Python Developer
+
+Skills: Python, Java, SQL, Pandas, NumPy, Machine Learning,
+Scikit-learn, Git, Data Analysis.
+
+Experience:
+Developed machine learning models using Python.
+Worked with Pandas and NumPy for data processing.
+Built SQL databases and performed data analysis.

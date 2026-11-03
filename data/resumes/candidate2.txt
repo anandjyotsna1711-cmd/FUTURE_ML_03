@@ -1,0 +1,9 @@
+Sarah Williams
+Web Developer
+
+Skills: HTML, CSS, JavaScript, React, Git, Communication.
+
+Experience:
+Developed responsive websites using HTML, CSS and JavaScript.
+Worked with React to build interactive user interfaces.
+Collaborated with a development team.
