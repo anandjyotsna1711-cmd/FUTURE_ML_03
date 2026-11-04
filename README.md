@@ -74,7 +74,7 @@ The current implementation uses keyword-based skill extraction and a frequency-b
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/anandjyotsna1711-cmd/FUTURE_ML_03
 cd RECRUITRA
 ```
 
